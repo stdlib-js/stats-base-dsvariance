@@ -103,32 +103,14 @@ The use of the term `n-1` is commonly referred to as Bessel's correction. Note, 
 
 <!-- /.intro -->
 
-<section class="installation">
 
-## Installation
-
-```bash
-npm install @stdlib/stats-base-dsvariance
-```
-
-Alternatively,
-
--   To load the package in a website via a `script` tag without installation and bundlers, use the [ES Module][es-module] available on the [`esm`][esm-url] branch (see [README][esm-readme]).
--   If you are using Deno, visit the [`deno`][deno-url] branch (see [README][deno-readme] for usage intructions).
--   For use in Observable, or in browser/node environments, use the [Universal Module Definition (UMD)][umd] build available on the [`umd`][umd-url] branch (see [README][umd-readme]).
-
-The [branches.md][branches-url] file summarizes the available branches and displays a diagram illustrating their relationships.
-
-To view installation and usage instructions specific to each branch build, be sure to explicitly navigate to the respective README files on each branch, as linked to above.
-
-</section>
 
 <section class="usage">
 
 ## Usage
 
 ```javascript
-var dsvariance = require( '@stdlib/stats-base-dsvariance' );
+import dsvariance from 'https://cdn.jsdelivr.net/gh/stdlib-js/stats-base-dsvariance@esm/index.mjs';
 ```
 
 #### dsvariance( N, correction, x, strideX )
@@ -136,7 +118,7 @@ var dsvariance = require( '@stdlib/stats-base-dsvariance' );
 Computes the [variance][variance] of a single-precision floating-point strided array using extended accumulation and returning an extended precision result.
 
 ```javascript
-var Float32Array = require( '@stdlib/array-float32' );
+import Float32Array from 'https://cdn.jsdelivr.net/gh/stdlib-js/array-float32@esm/index.mjs';
 
 var x = new Float32Array( [ 1.0, -2.0, 2.0 ] );
 
@@ -154,7 +136,7 @@ The function has the following parameters:
 The `N` and stride parameters determine which elements in the strided array are accessed at runtime. For example, to compute the [variance][variance] of every other element in `x`,
 
 ```javascript
-var Float32Array = require( '@stdlib/array-float32' );
+import Float32Array from 'https://cdn.jsdelivr.net/gh/stdlib-js/array-float32@esm/index.mjs';
 
 var x = new Float32Array( [ 1.0, 2.0, 2.0, -7.0, -2.0, 3.0, 4.0, 2.0 ] );
 
@@ -167,7 +149,7 @@ Note that indexing is relative to the first index. To introduce an offset, use [
 <!-- eslint-disable stdlib/capitalized-comments -->
 
 ```javascript
-var Float32Array = require( '@stdlib/array-float32' );
+import Float32Array from 'https://cdn.jsdelivr.net/gh/stdlib-js/array-float32@esm/index.mjs';
 
 var x0 = new Float32Array( [ 2.0, 1.0, 2.0, -2.0, -2.0, 2.0, 3.0, 4.0 ] );
 var x1 = new Float32Array( x0.buffer, x0.BYTES_PER_ELEMENT*1 ); // start at 2nd element
@@ -181,7 +163,7 @@ var v = dsvariance( 4, 1, x1, 2 );
 Computes the [variance][variance] of a single-precision floating-point strided array using extended accumulation and alternative indexing semantics and returning an extended precision result.
 
 ```javascript
-var Float32Array = require( '@stdlib/array-float32' );
+import Float32Array from 'https://cdn.jsdelivr.net/gh/stdlib-js/array-float32@esm/index.mjs';
 
 var x = new Float32Array( [ 1.0, -2.0, 2.0 ] );
 
@@ -196,7 +178,7 @@ The function has the following additional parameters:
 While [`typed array`][mdn-typed-array] views mandate a view offset based on the underlying buffer, the offset parameter supports indexing semantics based on a starting index. For example, to calculate the [variance][variance] for every other element in `x` starting from the second element
 
 ```javascript
-var Float32Array = require( '@stdlib/array-float32' );
+import Float32Array from 'https://cdn.jsdelivr.net/gh/stdlib-js/array-float32@esm/index.mjs';
 
 var x = new Float32Array( [ 2.0, 1.0, 2.0, -2.0, -2.0, 2.0, 3.0, 4.0 ] );
 
@@ -226,9 +208,14 @@ var v = dsvariance.ndarray( 4, 1, x, 2, 1 );
 
 <!-- eslint no-undef: "error" -->
 
-```javascript
-var discreteUniform = require( '@stdlib/random-array-discrete-uniform' );
-var dsvariance = require( '@stdlib/stats-base-dsvariance' );
+```html
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<script type="module">
+
+import discreteUniform from 'https://cdn.jsdelivr.net/gh/stdlib-js/random-array-discrete-uniform@esm/index.mjs';
+import dsvariance from 'https://cdn.jsdelivr.net/gh/stdlib-js/stats-base-dsvariance@esm/index.mjs';
 
 var x = discreteUniform( 10, -50, 50, {
     'dtype': 'float32'
@@ -237,6 +224,10 @@ console.log( x );
 
 var v = dsvariance( x.length, 1, x, 1 );
 console.log( v );
+
+</script>
+</body>
+</html>
 ```
 
 </section>
@@ -245,122 +236,7 @@ console.log( v );
 
 <!-- C interface documentation. -->
 
-* * *
 
-<section class="c">
-
-## C APIs
-
-<!-- Section to include introductory text. Make sure to keep an empty line after the intro `section` element and another before the `/section` close. -->
-
-<section class="intro">
-
-</section>
-
-<!-- /.intro -->
-
-<!-- C usage documentation. -->
-
-<section class="usage">
-
-### Usage
-
-```c
-#include "stdlib/stats/base/dsvariance.h"
-```
-
-#### stdlib_strided_dsvariance( N, correction, \*X, strideX )
-
-Computes the [variance][variance] of a single-precision floating-point strided array using extended accumulation and returning an extended precision result.
-
-```c
-const float x[] = { 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f }
-
-double v = stdlib_strided_dsvariance( 8, 1.0f, x, 1 );
-// returns 6.0
-```
-
-The function accepts the following arguments:
-
--   **N**: `[in] CBLAS_INT` number of indexed elements.
--   **correction**: `[in] float` degrees of freedom adjustment. Setting this parameter to a value other than `0` has the effect of adjusting the divisor during the calculation of the [variance][variance] according to `N-c` where `c` corresponds to the provided degrees of freedom adjustment. When computing the [variance][variance] of a population, setting this parameter to `0` is the standard choice (i.e., the provided array contains data constituting an entire population). When computing the unbiased sample [variance][variance], setting this parameter to `1` is the standard choice (i.e., the provided array contains data sampled from a larger population; this is commonly referred to as Bessel's correction).
--   **X**: `[in] float*` input array.
--   **strideX**: `[in] CBLAS_INT` stride length for `X`.
-
-```c
-double stdlib_strided_dsvariance( const CBLAS_INT N, const float correction, const float *X, const CBLAS_INT strideX );
-```
-
-#### stdlib_strided_dsvariance_ndarray( N, correction, \*X, strideX, offsetX )
-
-Computes the [variance][variance] of a single-precision floating-point strided array using extended accumulation and alternative indexing semantics and returning an extended precision result.
-
-```c
-const float x[] = { 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f }
-
-double v = stdlib_strided_dsvariance_ndarray( 4, 1.0f, x, 2, 0 );
-// returns ~6.666667
-```
-
-The function accepts the following arguments:
-
--   **N**: `[in] CBLAS_INT` number of indexed elements.
--   **correction**: `[in] float` degrees of freedom adjustment. Setting this parameter to a value other than `0` has the effect of adjusting the divisor during the calculation of the [variance][variance] according to `N-c` where `c` corresponds to the provided degrees of freedom adjustment. When computing the [variance][variance] of a population, setting this parameter to `0` is the standard choice (i.e., the provided array contains data constituting an entire population). When computing the unbiased sample [variance][variance], setting this parameter to `1` is the standard choice (i.e., the provided array contains data sampled from a larger population; this is commonly referred to as Bessel's correction).
--   **X**: `[in] float*` input array.
--   **strideX**: `[in] CBLAS_INT` stride length for `X`.
--   **offsetX**: `[in] CBLAS_INT` starting index for `X`.
-
-```c
-double stdlib_strided_dsvariance_ndarray( const CBLAS_INT N, const float correction, const float *X, const CBLAS_INT strideX, const CBLAS_INT offsetX );
-```
-
-</section>
-
-<!-- /.usage -->
-
-<!-- C API usage notes. Make sure to keep an empty line after the `section` element and another before the `/section` close. -->
-
-<section class="notes">
-
-</section>
-
-<!-- /.notes -->
-
-<!-- C API usage examples. -->
-
-<section class="examples">
-
-### Examples
-
-```c
-#include "stdlib/stats/base/dsvariance.h"
-#include <stdio.h>
-
-int main( void ) {
-    // Create a strided array:
-    const float x[] = { 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f };
-
-    // Specify the number of elements:
-    const int N = 4;
-
-    // Specify the stride length:
-    const int strideX = 2;
-
-    // Compute the variance:
-    double v = stdlib_strided_dsvariance( N, 1.0f, x, strideX );
-
-    // Print the result:
-    printf( "sample variance: %lf\n", v );
-}
-```
-
-</section>
-
-<!-- /.examples -->
-
-</section>
-
-<!-- /.c -->
 
 * * *
 
@@ -395,7 +271,7 @@ int main( void ) {
 
 ## Notice
 
-This package is part of [stdlib][stdlib], a standard library for JavaScript and Node.js, with an emphasis on numerical and scientific computing. The library provides a collection of robust, high performance libraries for mathematics, statistics, streams, utilities, and more.
+This package is part of [stdlib][stdlib], a standard library with an emphasis on numerical and scientific computing. The library provides a collection of robust, high performance libraries for mathematics, statistics, streams, utilities, and more.
 
 For more information on the project, filing bug reports and feature requests, and guidance on how to develop [stdlib][stdlib], see the main project [repository][stdlib].
 
@@ -460,17 +336,17 @@ Copyright &copy; 2016-2025. The Stdlib [Authors][stdlib-authors].
 
 [variance]: https://en.wikipedia.org/wiki/Variance
 
-[@stdlib/array/float32]: https://github.com/stdlib-js/array-float32
+[@stdlib/array/float32]: https://github.com/stdlib-js/array-float32/tree/esm
 
 [mdn-typed-array]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray
 
 <!-- <related-links> -->
 
-[@stdlib/stats/base/dvariance]: https://github.com/stdlib-js/stats-base-dvariance
+[@stdlib/stats/base/dvariance]: https://github.com/stdlib-js/stats-base-dvariance/tree/esm
 
-[@stdlib/stats/base/variance]: https://github.com/stdlib-js/stats-base-variance
+[@stdlib/stats/base/variance]: https://github.com/stdlib-js/stats-base-variance/tree/esm
 
-[@stdlib/stats/base/svariance]: https://github.com/stdlib-js/stats-base-svariance
+[@stdlib/stats/base/svariance]: https://github.com/stdlib-js/stats-base-svariance/tree/esm
 
 <!-- </related-links> -->
 
